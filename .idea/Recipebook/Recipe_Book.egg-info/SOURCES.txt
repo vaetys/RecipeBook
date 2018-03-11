@@ -1,0 +1,8 @@
+Recipe.py
+RecipeBookAPI.py
+Recipe_Book.egg-info/PKG-INFO
+Recipe_Book.egg-info/SOURCES.txt
+Recipe_Book.egg-info/dependency_links.txt
+Recipe_Book.egg-info/entry_points.txt
+Recipe_Book.egg-info/requires.txt
+Recipe_Book.egg-info/top_level.txt
