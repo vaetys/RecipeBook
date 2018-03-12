@@ -28,12 +28,15 @@ def search():
     return recipeBook.searchRecipes(searchTerm)
 
 @app.route('/addRecipe', methods=['POST'])
-def addRecipe():            #DOES NOT WORK
-    data = request.get_json(force=True)
-    recipeBook.addRecipeFromJson(data)
-    return 'Added a new recipe'
-
-    return 'Failed to add new recipe, format might be wrong'
+def addRecipe():
+    try:
+        """Adds a recipe based on the given json
+        to the cached recipes. Does not write it"""
+        data = request.get_json(force=True)
+        recipeBook.addRecipeFromJson(data)
+        return 'Added a new recipe'
+    except KeyError:
+        return 'Failed to add new recipe, format is wrong'
 
 
 if __name__ == '__main__':
