@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+/.idea/Recipebook/__pycache__/
+*.py[cod]
+*$py.class
+
 # C extensions
 *.so
 
