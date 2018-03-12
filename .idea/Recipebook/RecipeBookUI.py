@@ -2,19 +2,20 @@ from Recipe import Recipe
 from Ingredient import Ingredient
 from RecipeBook import RecipeBook
 import click
+import RecipeBookAPI
 
 
 # This is a work in progress to create a
 # terminal user interface using click-library
 #
 
-@click.group()
-def run(name):
+def run():
+
     pass
 
 
-@run.command()
-@click.option('--name', prompt='your name',
+@click.command()
+@click.option('--name', '-n', prompt='your name',
               help='Your own name!')
 def greet(name=None):
     """greets the user"""
@@ -25,11 +26,18 @@ def greet(name=None):
 def moi():
     click.echo("NO MOI")
 
+
 def showRecipe():
     Recipe
 
+@click.command()
+def startApi():
+    RecipeBookAPI.run()
+    click.echo('\n Stopped the Recipebook API \n')
 
 
 if __name__ == "__main__":
     run()
+
+
 

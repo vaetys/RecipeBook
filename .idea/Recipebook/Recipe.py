@@ -49,7 +49,7 @@ class Recipe:
         self.ingredients.extend(ingredientlist)
 
 
-    def toJSON(self):
+    def toJson(self):
         """creates a json based on the recipe, with for-space-indentation
         @returns a json-object based on the recipe
         """
@@ -70,16 +70,7 @@ class Recipe:
 #THIS IS A TESTING BLOCK
 #-------------------------------------------------
 def main():
-    testRecipe = Recipe(name='rice pudding', instructions='do stuff')
-    carrot = Ingredient('carrot', 'unit', 1)
-    testRecipe.addIngredient(carrot)
-    testRecipe.addIngredient(Ingredient(name='shit', amount=500))
-
-    testRecipe2 = Recipe.recipeFromJson(testRecipe.toJSON())
-    print(testRecipe2.toJSON())
-    carrot2 = Ingredient('carrot', 'unit', 5)
-    testRecipe2.addIngredient(carrot2)
-    print(testRecipe2.ingredients[2])
+    print('Running Recipe.py')
 
 if __name__ == '__main__':
     main()

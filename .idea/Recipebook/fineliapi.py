@@ -44,6 +44,7 @@ class FineliAPIWatcherFactory():
 
 
 #Testing block for the class.
+#Use this to test the functionality.
 #-----------------------------------------------------
 if __name__ == '__main__':
     factory = FineliAPIWatcherFactory()

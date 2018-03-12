@@ -12,5 +12,6 @@ setup(name="Recipe Book",
       entry_points="""
         [console_scripts]
         hello=RecipeBookUI:greet
+        startapi=RecipeBookUI:startApi
         """,
       )

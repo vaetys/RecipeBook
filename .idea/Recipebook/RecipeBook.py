@@ -20,6 +20,7 @@ class RecipeBook:
             self.recipes=recipes
 
 
+
     def addRecipe(self, recipe):
         """Adds a single Recipe to the Recipebook.recipes"""
         self.recipes.append(recipe)
@@ -29,6 +30,7 @@ class RecipeBook:
         """gets a single Recipe from the Recipebook.recipes with the give index"""
         return self.recipes[index].toJSON()
 
+
     def getRecipes(self):
         """Returns the Recipebook.recipes as a json-object"""
         return json.dumps(self.recipes, default=lambda o: o.__dict__,
@@ -37,15 +39,13 @@ class RecipeBook:
 
     def parseRecipesFromJsonFile(self, file):
         """Parses the given json-file, creates Recipe-instances and appends the to Recipebook.recipes"""
-
         data = json.load(open(file))
-        for dict in data:
-            self.addRecipe(Recipe.recipeFromJson(dict))
-
+        for dict in data: # Loops through each dictionary in the file
+            self.addRecipe(Recipe.recipeFromJson(dict)) #Inits a recipe, and adds it to the recipebook
 
 
     def searchRecipes(self, searchTerm):
-        """Returns a json-fobject list of recipes,
+        """Returns a json-object list of recipes,
         where any of its ingredients contain the given
         searchTerm"""
         results = []
@@ -55,18 +55,20 @@ class RecipeBook:
                     results.append(Recipe)
                     break
         return json.dumps(results, default=lambda o: o.__dict__,
-                          sort_keys=False, indent=4)
+                          sort_keys=False, indent=4) # Parses the results-list into json
 
 
     def run(self, fileName=None):
+        """Basically runs the app. Asks for readable files name
+        if its not given in arguments"""
         if fileName is None:
-            fileName = input('Enter file name: ')
+            fileName = input('Enter file name: ') #if filename is not given or is wrong, asks for it
         self.parseRecipesFromJsonFile(fileName)
+
 
     def addRecipeFromJson(self, json):
         """creates and adds a recipe from json-object
         the object must be properly formatted with corresponding keys"""
-
         recipe = Recipe.recipeFromJson(json)
         self.addRecipe(recipe)
 

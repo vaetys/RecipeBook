@@ -2,9 +2,7 @@ import json
 
 class Ingredient:
     """
-    Class to parse and create ingredients, usually from JSON-data. Ingredients
-    are stored and used in recipes
-
+    Class to parse and create ingredients, usually from JSON-data.
     Attributes:
         name: The name of the ingredient
         unit: units, in which the ingredient is measured in (eg. grams, litres)
@@ -31,14 +29,6 @@ class Ingredient:
 
 
     def ingredientFromJson(jsonData):
-       # x = json.loads(jsonIngredient, object_hook=lambda d: namedtuple('Ingredient', d.keys())(*d.values()))
-        ingredient = Ingredient(jsonData['name'],jsonData['unit'], jsonData['amount'])
+        """Parses the given json and initializes and returns ingredient-instance"""
+        ingredient = Ingredient(jsonData['name'],jsonData['unit'], jsonData['amount']) #initializes Ingredient with values from json
         return ingredient
-
-
-#THIS IS A TESTING BLOCK
-#-------------------------------------------------
-
-
-
-#-------------------------------------------------

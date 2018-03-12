@@ -4,21 +4,28 @@ from RecipeBook import RecipeBook
 from Recipe import Recipe
 import json
 
+#Module to provide a RESTful-API to use the RecipeBook
+#this module should only contain the api-handling. Currently
+#functions also as the starting module for the application
 
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def startPage():
+    return 'Welcome to the Recipebook API!'
 
 @app.route('/getRecipe')
 def getRecipe():
+    """Returns a recipe from the given index of RecipeBook.recipes"""
     index = request.args.get('index')
     return recipeBook.getRecipeJson(0)
 
+
 @app.route('/recipes')
 def getRecipes():
+    """Returns all recipes from cache"""
     return recipeBook.getRecipes()
+
 
 @app.route('/search')
 def search():
@@ -26,6 +33,7 @@ def search():
     a json-list of found recipes"""
     searchTerm = request.args.get('searchTerm')
     return recipeBook.searchRecipes(searchTerm)
+
 
 @app.route('/addRecipe', methods=['POST'])
 def addRecipe():
@@ -39,7 +47,13 @@ def addRecipe():
         return 'Failed to add new recipe, format is wrong'
 
 
-if __name__ == '__main__':
-    recipeBook = RecipeBook('Grannys e-recipes')
-    recipeBook.run('recipes.json')
+def main():
+    """Starts the app, initializes the RecipeBook and asks for a file to parse."""
+    recipeBook = RecipeBook(input('Whats the recipebooks name?')) # Asks for the name of the recipebook. Useless now, but could be used later
+    recipeBook.run(input('File to load data from?'))  # Asks for the file to parse. Currently only accepts existing jsons with proper dictionaries
     app.run()
+
+
+if __name__ == '__main__':
+    main()
+
