@@ -1,5 +1,4 @@
 import json
-from collections import namedtuple
 
 class Ingredient:
     """
@@ -7,9 +6,9 @@ class Ingredient:
     are stored and used in recipes
 
     Attributes:
-    name: The name of the ingredient
-    unit: units, in which the ingredient is measured in (eg. grams, litres)
-    amount: number value describing the amount of said ingredient. This is
+        name: The name of the ingredient
+        unit: units, in which the ingredient is measured in (eg. grams, litres)
+        amount: number value describing the amount of units
     """
 
 
@@ -27,20 +26,19 @@ class Ingredient:
 
 
     def toJson(self):
+        """Returns the object in json-format"""
         return json.dumps(self.__dict__)
 
 
-def ingredientFromJson(jsonIngredient):
-    x = json.loads(jsonIngredient, object_hook=lambda d: namedtuple('Ingredient', d.keys())(*d.values()))
-    ingredient = Ingredient(x.name,x.unit, x.amount)
-    return ingredient
+    def ingredientFromJson(jsonData):
+       # x = json.loads(jsonIngredient, object_hook=lambda d: namedtuple('Ingredient', d.keys())(*d.values()))
+        ingredient = Ingredient(jsonData['name'],jsonData['unit'], jsonData['amount'])
+        return ingredient
 
 
 #THIS IS A TESTING BLOCK
 #-------------------------------------------------
-testIngr = Ingredient('carrot', 'grams', 500)
-test2 = ingredientFromJson(testIngr.toJson())
-print(testIngr)
+
 
 
 #-------------------------------------------------

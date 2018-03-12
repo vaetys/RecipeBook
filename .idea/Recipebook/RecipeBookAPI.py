@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import request
-from RecipeBookUI import *
 from RecipeBook import RecipeBook
 from Recipe import Recipe
 import json
@@ -23,12 +22,15 @@ def getRecipes():
 
 @app.route('/search')
 def search():
+    """searches cached recipes, and returns
+    a json-list of found recipes"""
     searchTerm = request.args.get('searchTerm')
     return recipeBook.searchRecipes(searchTerm)
 
 @app.route('/addRecipe', methods=['POST'])
 def addRecipe():            #DOES NOT WORK
-    request.args.get
+    data = request.get_json(force=True)
+    recipeBook.addRecipeFromJson(data)
     return 'Added a new recipe'
 
     return 'Failed to add new recipe, format might be wrong'

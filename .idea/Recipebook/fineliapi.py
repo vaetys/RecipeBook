@@ -42,6 +42,7 @@ class FineliAPIWatcherFactory():
         req = Request(fullUrl, headers={'User-Agent': 'Mozilla/5.0'})
         return urlopen(req).read()
 
+
 #Testing block for the class.
 #-----------------------------------------------------
 if __name__ == '__main__':

@@ -9,9 +9,9 @@ class Recipe:
     as well as a short istruction.
 
     Attributes:
-    name: The name of the recipe
-    ingredients: Ingredients for the recipe
-    instructions: instructions on how to cook the recipe
+        name: The name of the recipe
+        ingredients: Ingredients for the recipe
+        instructions: instructions on how to cook the recipe
     """
 
 
@@ -34,7 +34,6 @@ class Recipe:
     def __str__(self):
         ingrNames = [''for ingredient in self.ingredients]
         ingrStr = str(ingrNames)
-
         return self.name+' \n'+ingrStr+' \n Instructions: '+self.instructions
 
 
@@ -59,14 +58,12 @@ class Recipe:
 
 
     def recipeFromJson(jsonRecipe):
-        """ Parses the given json, and calls to initialize a Recipe-instance
-        with the values from the json-object. This solution is janky.
-        """
-        placeHolder = json.loads(jsonRecipe, object_hook=lambda d: namedtuple('jsonObj', d.keys())(*d.values()))
-        phIngList = [] #list and a loop to transform JSON-dictionary-ingredients into actual Ingredient-type instances
-        for jsonObj in placeHolder.ingredients:
-            phIngList.append(Ingredient(jsonObj.name, jsonObj.unit, jsonObj.amount))
-        recipe = Recipe(placeHolder.name, phIngList, placeHolder.instructions)
+        """Inits and returns a new Recipe-instance based on the
+        information parsed from the given json-object"""
+        ingrList = []
+        for dict in jsonRecipe['ingredients']:
+            ingrList.append(Ingredient.ingredientFromJson(dict))
+        recipe = Recipe(jsonRecipe['name'], ingrList, jsonRecipe['ingredients'])
         return recipe
 
 
