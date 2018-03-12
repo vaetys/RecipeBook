@@ -47,13 +47,10 @@ def addRecipe():
         return 'Failed to add new recipe, format is wrong'
 
 
-def main():
-    """Starts the app, initializes the RecipeBook and asks for a file to parse."""
-    recipeBook = RecipeBook(input('Whats the recipebooks name?')) # Asks for the name of the recipebook. Useless now, but could be used later
-    recipeBook.run(input('File to load data from?'))  # Asks for the file to parse. Currently only accepts existing jsons with proper dictionaries
-    app.run()
-
 
 if __name__ == '__main__':
-    main()
+    recipeBook = RecipeBook('greannys recipes') # Asks for the name of the recipebook. Useless now, but could be used later
+    recipeBook.run('recipes.json')  # Asks for the file to parse. Currently only accepts existing jsons with proper dictionaries
+    app.run()
+
 
