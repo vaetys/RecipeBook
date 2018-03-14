@@ -14,11 +14,10 @@ class RecipeBook:
 
     def __init__(self, name=None, recipes=None):
         self.name = name
-        if recipes is None:
+        if recipes is None: #If a ready list is not given, creates an empty list to use
             self.recipes = []
         else:
             self.recipes=recipes
-
 
 
     def addRecipe(self, recipe):
@@ -27,27 +26,32 @@ class RecipeBook:
 
 
     def getRecipeJson(self, index):
-        """gets a single Recipe from the Recipebook.recipes with the give index"""
-        return self.recipes[index].toJSON()
+        """@returns a single Recipe from the Recipebook.recipes with the give index"""
+        return self.recipes[index].toJson()
 
 
-    def getRecipes(self):
-        """Returns the Recipebook.recipes as a json-object"""
+    def getRecipesJson(self):
+        """@returns the Recipebook.recipes as a json-object"""
         return json.dumps(self.recipes, default=lambda o: o.__dict__,
                           sort_keys=False, indent=4)
 
 
     def parseRecipesFromJsonFile(self, file):
         """Parses the given json-file, creates Recipe-instances and appends the to Recipebook.recipes"""
-        data = json.load(open(file))
-        for dict in data: # Loops through each dictionary in the file
-            self.addRecipe(Recipe.recipeFromJson(dict)) #Inits a recipe, and adds it to the recipebook
+        try:
+            data = json.load(open(file))
+            for dict in data: # Loops through each dictionary in the file
+                self.addRecipe(Recipe.recipeFromJson(dict)) #Inits a recipe, and adds it to the recipebook
+        except (FileNotFoundError, ValueError, KeyError) as e:
+            newFilename = input('File with that name not found or is empty, try another:')
+            self.run(newFilename)
 
 
     def searchRecipes(self, searchTerm):
         """Returns a json-object list of recipes,
         where any of its ingredients contain the given
-        searchTerm"""
+        searchTerm
+        @returns json-list of found recipes"""
         results = []
         for Recipe in self.recipes:
             for Ingredient in Recipe.ingredients:
@@ -58,11 +62,8 @@ class RecipeBook:
                           sort_keys=False, indent=4) # Parses the results-list into json
 
 
-    def run(self, fileName=None):
-        """Basically runs the app. Asks for readable files name
-        if its not given in arguments"""
-        if fileName is None:
-            fileName = input('Enter file name: ') #if filename is not given or is wrong, asks for it
+    def run(self, fileName):
+        """Basically 'runs' the app. Currently only starts by reading the given file"""
         self.parseRecipesFromJsonFile(fileName)
 
 
@@ -77,14 +78,7 @@ class RecipeBook:
 #THIS IS A TESTING BLOCK
 #-------------------------------------------------
 def test():
-    testlist = RecipeBook('myRecipes')
-    testlist.run('recipes.json')
-    recipe1 = Recipe('rice pudding')
-    testlist.addRecipe(recipe1)
-
-    recipe2 = testlist.getRecipeJson(0)
-
-    print(testlist.searchRecipes('chIcken'))
+    pass
 
 if __name__ == '__main__':
     pass

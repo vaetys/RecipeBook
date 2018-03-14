@@ -1,8 +1,8 @@
 from flask import Flask
 from flask import request
 from RecipeBook import RecipeBook
-from Recipe import Recipe
 import json
+import sys
 
 #Module to provide a RESTful-API to use the RecipeBook
 #this module should only contain the api-handling. Currently
@@ -16,30 +16,36 @@ def startPage():
 
 @app.route('/getRecipe')
 def getRecipe():
-    """Returns a recipe from the given index of RecipeBook.recipes"""
-    index = request.args.get('index')
-    return recipeBook.getRecipeJson(0)
-
+    """Returns a recipe from the given index from param 'index' of RecipeBook.recipes"""
+    try:
+        index = int(request.args.get('index'))
+        return recipeBook.getRecipeJson(index)
+    except IndexError:
+        return('No recipe in that index') #This is not a sensible solution if developing
+                                          #with this API, but works in this case
 
 @app.route('/recipes')
 def getRecipes():
     """Returns all recipes from cache"""
-    return recipeBook.getRecipes()
+    return recipeBook.getRecipesJson()
 
 
 @app.route('/search')
 def search():
     """searches cached recipes, and returns
-    a json-list of found recipes"""
+    a json-list of found recipes. Gets searh term
+    from the param 'searchTerm' of the request"""
     searchTerm = request.args.get('searchTerm')
     return recipeBook.searchRecipes(searchTerm)
 
 
 @app.route('/addRecipe', methods=['POST'])
 def addRecipe():
+    """Adds a recipe based on the given
+    json in the body of the request
+    to the cached recipes. Does not write.
+    """
     try:
-        """Adds a recipe based on the given json
-        to the cached recipes. Does not write it"""
         data = request.get_json(force=True)
         recipeBook.addRecipeFromJson(data)
         return 'Added a new recipe'
@@ -47,10 +53,10 @@ def addRecipe():
         return 'Failed to add new recipe, format is wrong'
 
 
-
 if __name__ == '__main__':
     recipeBook = RecipeBook('greannys recipes') # Asks for the name of the recipebook. Useless now, but could be used later
-    recipeBook.run('recipes.json')  # Asks for the file to parse. Currently only accepts existing jsons with proper dictionaries
+    if len(sys.argv) > 1:
+       recipeBook.run(sys.argv[1])
+    else:
+        recipeBook.run(input('Please give filename:'))# Asks for the file to parse. Currently only accepts existing jsons with proper dictionaries
     app.run()
-
-

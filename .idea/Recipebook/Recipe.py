@@ -1,6 +1,4 @@
 from Ingredient import Ingredient
-
-from collections import namedtuple
 import json
 
 class Recipe:
@@ -16,18 +14,12 @@ class Recipe:
 
 
     def __init__(self, name=None, ingredients=None, instructions=None):
-        """Initializes an instance of Recipe-class
-        @param name name of the recipe
-        @param ingredients a list of ingredients. If one is not given,
-        inits an empty list to store said ingredients
-        @param instructions a simple string for instructions on how to
-        cook said recipe
-        """
+        """Initializes an instance of Recipe-class"""
         self.name = name
-        if ingredients is None:
+        if ingredients is None: #If a ready list of ingredients is not given, creates an empty list
             self.ingredients = []
         else:
-            self.ingredients = list(ingredients)
+            self.ingredients = ingredients
         self.instructions = instructions
 
 
@@ -59,23 +51,10 @@ class Recipe:
 
     def recipeFromJson(jsonRecipe):
         """Inits and returns a new Recipe-instance based on the
-        information parsed from the given json-object"""
+        information parsed from the given json-object
+        @returns the Recipe object"""
         ingrList = []
         for dict in jsonRecipe['ingredients']:
             ingrList.append(Ingredient.ingredientFromJson(dict))
-        recipe = Recipe(jsonRecipe['name'], ingrList, jsonRecipe['ingredients'])
+        recipe = Recipe(jsonRecipe['name'], ingrList, jsonRecipe['instructions'])
         return recipe
-
-
-#THIS IS A TESTING BLOCK
-#-------------------------------------------------
-def main():
-    print('Running Recipe.py')
-
-if __name__ == '__main__':
-    main()
-
-#print(testRecipe.toJSON())
-
-
-#-------------------------------------------------

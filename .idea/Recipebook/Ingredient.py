@@ -11,9 +11,6 @@ class Ingredient:
 
 
     def __init__(self, name=None, unit=None, amount=None):
-        """initializes instance of the ingredient class with
-        each attribute mapped with given param
-        """
         self.name = name
         self.amount = amount
         self.unit = unit
@@ -24,11 +21,12 @@ class Ingredient:
 
 
     def toJson(self):
-        """Returns the object in json-format"""
+        """@returns the object in json-format"""
         return json.dumps(self.__dict__)
 
 
     def ingredientFromJson(jsonData):
-        """Parses the given json and initializes and returns ingredient-instance"""
+        """Parses the given json and initializes Ingredient-instance
+        @returns ingredient-instance"""
         ingredient = Ingredient(jsonData['name'],jsonData['unit'], jsonData['amount']) #initializes Ingredient with values from json
         return ingredient
