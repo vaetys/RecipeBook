@@ -1,7 +1,4 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+
 
 # C extensions
 *.so
@@ -24,6 +21,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+**/workspace.xml
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
